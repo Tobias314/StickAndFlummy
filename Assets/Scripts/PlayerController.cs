@@ -3,8 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody rb;
-    public bool isJumping;
+    private Rigidbody rb;
+    private bool isJumping;
 
 
     void Start()
