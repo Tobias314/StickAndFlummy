@@ -8,6 +8,7 @@ public class ModeController : MonoBehaviour
     {
         sticky, flummy
     }
+    public PlayerController player;
 
     public Mode currentMode;
     public Light sunlight;
@@ -33,9 +34,11 @@ public class ModeController : MonoBehaviour
     }
     void EnterStickyMode(){
         sunlight.color = stickyColor;
+        player.ChangeMode(Mode.sticky);
     }
     void EnterFlummyMode(){
         sunlight.color = flummyColor;
+        player.ChangeMode(Mode.flummy);
     }
 
 }

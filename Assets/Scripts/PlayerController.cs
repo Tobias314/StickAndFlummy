@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
     public bool isJumping;
     public bool isColliding;
+    public Vector3 collisionDirection;
 
     private Vector3[] directions = new Vector3[]{ new Vector3(1,0,0),
                         new Vector3(-1,0,0),
@@ -14,6 +15,12 @@ public class PlayerController : MonoBehaviour
                         new Vector3(0,0,1),
                         new Vector3(0,0,-1)};
 
+
+    public void ChangeMode(ModeController.Mode newMode){
+        if(newMode == ModeController.Mode.flummy){
+            
+        }
+    }
 
     void Start()
     { 
@@ -46,10 +53,13 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision){
         //Debug.Log("entered");
         isColliding = true;
-        Debug.Log("number of contact points" + collision.contactCount);
+        Vector3 collisionDirection = new Vector3(0,0,0);
         for(int i=0; i<collision.contactCount; i++){
-            Debug.Log(collision.GetContact(i).point);
+            collisionDirection += collision.GetContact(i).point;
         }
+        this.collisionDirection = collisionDirection / collision.contactCount - transform.position;
+        this.collisionDirection = Vector3.Normalize(this.collisionDirection);
+        Debug.Log("average contact direction" + this.collisionDirection);
     }
 
     private void OnCollisionExit(Collision other){
