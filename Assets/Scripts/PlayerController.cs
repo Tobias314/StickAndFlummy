@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     public bool isJumping;
     public bool isColliding;
     public Vector3 collisionDirection;
+    public bool useGravitationInBounce = true;
+    public ModeController.Mode currentMode = ModeController.Mode.flummy;
 
     private Vector3[] directions = new Vector3[]{ new Vector3(1,0,0),
                         new Vector3(-1,0,0),
@@ -17,15 +19,28 @@ public class PlayerController : MonoBehaviour
 
 
     public void ChangeMode(ModeController.Mode newMode){
+        Debug.Log("switched mode to " + newMode);
+        var collider = GetComponent<SphereCollider>();
         if(newMode == ModeController.Mode.flummy){
-            
+            collider.material.bounciness = 1;
+            if(isColliding){
+                rb.AddForce((collisionDirection * 10) * Time.fixedDeltaTime * 50, ForceMode.Impulse);
+            }
+            rb.useGravity = useGravitationInBounce;
+        }else if(newMode == ModeController.Mode.sticky){
+            collider.material.bounciness = 0;
+            rb.useGravity = true;
         }
     }
 
     void Start()
     { 
+        //ChangeMode(ModeController.Mode.flummy)
         rb = GetComponent<Rigidbody>();
-
+        rb.useGravity = useGravitationInBounce;
+        var collider = GetComponent<SphereCollider>();
+        collider.material.bounciness = 1;
+        rb.AddForce((transform.right + transform.up * 5) * Time.fixedDeltaTime * 100, ForceMode.Impulse);
         // Moves the GameObject using it's transform.
         //rb.isKinematic = true;
     }
