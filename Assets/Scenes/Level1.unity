@@ -463,6 +463,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d55a0516648affe42bef5db9ca2c22ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentMode: 0
+  sunlight: {fileID: 587852361}
+  stickyColor: {r: 0.6886792, g: 0.23064259, b: 0.23064259, a: 0.39215687}
+  flummyColor: {r: 0.26139197, g: 0.34032977, b: 0.8396226, a: 0.39215687}
 --- !u!4 &1238352959
 Transform:
   m_ObjectHideFlags: 0
