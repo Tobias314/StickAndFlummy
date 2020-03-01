@@ -50,9 +50,9 @@ public class PlayerController : MonoBehaviour
         if (currentMode == ModeController.Mode.normal)
         {
             //rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
-            if (rb.velocity.x < 1)
+            if (rb.velocity.x < 2)
             {
-                rb.velocity += new Vector3(.1f, 0, 0);
+                rb.velocity += new Vector3(.3f, 0, 0);
             }
         }
         //Debug.Log(isColliding);
