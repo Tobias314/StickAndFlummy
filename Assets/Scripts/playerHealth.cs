@@ -14,4 +14,12 @@ public class playerHealth : MonoBehaviour
             progress.Win();
         }
     }
+
+    private void Update()
+    {
+        if (transform.position.y < -5f)
+        {
+            progress.Lose();
+        }
+    }
 }

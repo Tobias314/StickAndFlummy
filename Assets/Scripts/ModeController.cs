@@ -6,42 +6,79 @@ public class ModeController : MonoBehaviour
 {
     public enum Mode
     {
-        sticky, flummy
+        normal, sticky, flummy, ghost
     }
     public PlayerController player;
 
-    public Mode currentMode;
     public Light sunlight;
 
+    public Color normalColor;
     public Color stickyColor;
     public Color flummyColor;
+    public Color ghostColor;
 
     private Vector3 flummyJumpSpeed = new Vector3(1,2,0) * 5;
 
+    private bool stickyIsHeld;
+    private bool flummyIsHeld;
+
     public void Start(){
-        currentMode = Mode.flummy;
         //EnterFlummyMode();
         player.rb.AddForce(flummyJumpSpeed, ForceMode.Impulse);    
         sunlight.color = flummyColor;
     }
     void Update(){
         if(Input.GetKeyDown(KeyCode.S)){
-            LeaveCurrentMode();
-            currentMode = Mode.sticky;
-            EnterStickyMode();
+            stickyIsHeld = true;
+            UpdateMode();
         }
          if(Input.GetKeyDown(KeyCode.F)){
-            LeaveCurrentMode();
-            currentMode = Mode.flummy;
+            flummyIsHeld = true;
+            UpdateMode();
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            stickyIsHeld = false;
+            UpdateMode();
+        }
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            flummyIsHeld = false;
+            UpdateMode();
+        }
+    }
+
+    void UpdateMode(){
+        LeaveCurrentMode();
+        if (!stickyIsHeld && !flummyIsHeld)
+        {
+            EnterNormalMode();
+        }
+        if (stickyIsHeld && !flummyIsHeld)
+        {
+            EnterStickyMode();
+        }
+        if (!stickyIsHeld && flummyIsHeld)
+        {
             EnterFlummyMode();
         }
-
-        player.currentMode = currentMode;
+        if (stickyIsHeld && flummyIsHeld)
+        {
+            EnterGhostMode();
+        }
     }
 
     void LeaveCurrentMode(){
         return;
     }
+
+    void EnterNormalMode()
+    {
+        player.GetComponent<SphereCollider>().material.bounciness = 0; //this belong is LeaveCurrentMode()
+        player.currentMode = Mode.normal;
+        sunlight.color = normalColor;
+    }
+
     void EnterStickyMode(){
         sunlight.color = stickyColor;
         player.GetComponent<SphereCollider>().material.bounciness = 0;
@@ -57,4 +94,11 @@ public class ModeController : MonoBehaviour
             player.rb.useGravity = player.useGravitationInBounce;
     }
 
+
+    void EnterGhostMode()
+    {
+        player.currentMode = Mode.ghost;
+        sunlight.color = ghostColor;
+        Debug.Log("Entering GHOOOOOOOOST MOOOODE!");
+    }
 }
