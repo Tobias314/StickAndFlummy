@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class ModeController : MonoBehaviour
@@ -9,6 +10,8 @@ public class ModeController : MonoBehaviour
         normal, sticky, flummy, ghost
     }
     public PlayerController player;
+    public Text timerText;
+    private float startTime;
 
     public Light sunlight;
 
@@ -37,6 +40,8 @@ public class ModeController : MonoBehaviour
 
         prevColor = normalColor;
         currentColor = normalColor;
+
+        startTime = Time.time;
     }
     void Update(){
         // delay is to make it easier to switch from sticky to flummy without accidentally passing by normal or ghost
