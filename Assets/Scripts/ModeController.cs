@@ -16,6 +16,14 @@ public class ModeController : MonoBehaviour
     public Color stickyColor;
     public Color flummyColor;
 
+    private Vector3 flummyJumpSpeed = new Vector3(1,2,0) * 5;
+
+    public void Start(){
+        currentMode = Mode.flummy;
+        //EnterFlummyMode();
+        player.rb.velocity = flummyJumpSpeed;    
+        sunlight.color = flummyColor;
+    }
     void Update(){
         if(Input.GetKeyDown(KeyCode.S)){
             LeaveCurrentMode();
@@ -27,6 +35,8 @@ public class ModeController : MonoBehaviour
             currentMode = Mode.flummy;
             EnterFlummyMode();
         }
+
+        player.currentMode = currentMode;
     }
 
     void LeaveCurrentMode(){
@@ -34,11 +44,16 @@ public class ModeController : MonoBehaviour
     }
     void EnterStickyMode(){
         sunlight.color = stickyColor;
-        player.ChangeMode(Mode.sticky);
+        player.GetComponent<SphereCollider>().material.bounciness = 0;
     }
     void EnterFlummyMode(){
         sunlight.color = flummyColor;
-        player.ChangeMode(Mode.flummy);
+        player.GetComponent<SphereCollider>().material.bounciness = 1;
+        if(player.isColliding){
+            //player.rb.AddForce((Mathf.Abs(player.collisionDirection.x) * player.collisionDirection) + ((1.0f - Mathf.Abs(player.collisionDirection.x)) * Vector3.up) * 10, ForceMode.Impulse);
+            player.rb.velocity = flummyJumpSpeed;        
+        }
+            player.rb.useGravity = player.useGravitationInBounce;
     }
 
 }
