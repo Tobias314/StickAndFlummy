@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
             //rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
             if (rb.velocity.x < 1)
             {
-                rb.velocity += new Vector3(.1f, 0, 0);
+                rb.velocity += new Vector3(.2f, 0, 0);
             }
         }
         //Debug.Log(isColliding);

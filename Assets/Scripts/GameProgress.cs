@@ -10,7 +10,8 @@ public class GameProgress : MonoBehaviour
 
     public void Lose(){
         //Time.timeScale = 0.1f;
-        //Time.fixedDeltaTime /= 10; 
+        //Time.fixedDeltaTime /= 10;
+        GetComponent<ModeController>().player.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         text.text = "I lose :(((((((((((";
         Invoke("RelodeScene", 1);   
             
