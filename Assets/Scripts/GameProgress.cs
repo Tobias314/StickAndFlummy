@@ -11,7 +11,9 @@ public class GameProgress : MonoBehaviour
     public void Lose(){
         //Time.timeScale = 0.1f;
         //Time.fixedDeltaTime /= 10; 
-        Invoke("RelodeScene", 1);        
+        text.text = "I lose :(((((((((((";
+        Invoke("RelodeScene", 1);   
+            
     }
 
     public void Win(){
@@ -22,6 +24,7 @@ public class GameProgress : MonoBehaviour
 
     void RelodeScene(){
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        text.text = ""; 
         //Time.timeScale = 1;
         //Time.fixedDeltaTime *= 10; 
     }
