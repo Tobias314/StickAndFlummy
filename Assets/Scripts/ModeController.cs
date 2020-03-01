@@ -82,6 +82,7 @@ public class ModeController : MonoBehaviour
     */
     void EnterNormalMode()
     {
+        player.gameObject.layer = 0;
         player.GetComponent<SphereCollider>().material.bounciness = 0; //this belong is LeaveCurrentMode()
         player.currentMode = Mode.normal;
         sunlight.color = normalColor;
@@ -89,11 +90,13 @@ public class ModeController : MonoBehaviour
     }
 
     void EnterStickyMode(){
+        player.gameObject.layer = 0;
         sunlight.color = stickyColor;
         player.currentMode = Mode.sticky;
         player.GetComponent<SphereCollider>().material.bounciness = 0;
     }
     void EnterFlummyMode(){
+        player.gameObject.layer = 0;
         player.rb.useGravity = false;
         sunlight.color = flummyColor;
         player.currentMode = Mode.flummy;
@@ -114,5 +117,6 @@ public class ModeController : MonoBehaviour
         sunlight.color = ghostColor;
         Debug.Log("Entering GHOOOOOOOOST MOOOODE!");
         player.rb.useGravity = true;
+        player.gameObject.layer = 8;
     }
 }
