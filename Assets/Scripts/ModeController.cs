@@ -24,7 +24,7 @@ public class ModeController : MonoBehaviour
 
     public void Start(){
         //EnterFlummyMode();
-        player.rb.velocity = flummyJumpSpeed;    
+        player.rb.AddForce(flummyJumpSpeed, ForceMode.Impulse);    
         sunlight.color = flummyColor;
     }
     void Update(){
@@ -88,7 +88,8 @@ public class ModeController : MonoBehaviour
         player.GetComponent<SphereCollider>().material.bounciness = 1;
         if(player.isColliding){
             //player.rb.AddForce((Mathf.Abs(player.collisionDirection.x) * player.collisionDirection) + ((1.0f - Mathf.Abs(player.collisionDirection.x)) * Vector3.up) * 10, ForceMode.Impulse);
-            player.rb.velocity = flummyJumpSpeed;        
+            //player.rb.velocity = ;
+            //player.rb.AddForce( - player.collisionDirection * 10 + Vector3.up * 3, ForceMode.Impulse);        
         }
             player.rb.useGravity = player.useGravitationInBounce;
     }

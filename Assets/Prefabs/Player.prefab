@@ -98,7 +98,6 @@ GameObject:
   - component: {fileID: 2116639694661168930}
   - component: {fileID: 1267311341623603376}
   - component: {fileID: 3457915696044393651}
-  - component: {fileID: 585497471139615750}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -202,6 +201,12 @@ MonoBehaviour:
   collisionDirection: {x: 0, y: 0, z: 0}
   useGravitationInBounce: 1
   currentMode: 1
+  gravityDirectionIndex: 0
+  GravityDirections:
+  - {x: 0, y: -9.81, z: 0}
+  - {x: -9.81, y: 0, z: 0}
+  - {x: 0, y: 9.81, z: 0}
+  - {x: 9.81, y: 0, z: 0}
 --- !u!114 &1267311341623603376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,17 +232,4 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!135 &585497471139615750
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2116639694661168956}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.51
   m_Center: {x: 0, y: 0, z: 0}
