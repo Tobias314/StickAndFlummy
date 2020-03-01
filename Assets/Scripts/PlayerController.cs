@@ -47,13 +47,17 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (currentMode == ModeController.Mode.normal)
+        {
+            rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
+        }
         //Debug.Log(isColliding);
         //rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
         //if(isJumping){
-            //isJumping=false;
-            //if(isColliding){
-            //    rb.AddForce(new Vector3(0,10,0), ForceMode.Impulse);
-            //}
+        //isJumping=false;
+        //if(isColliding){
+        //    rb.AddForce(new Vector3(0,10,0), ForceMode.Impulse);
+        //}
         //} 
     }
 
@@ -69,7 +73,7 @@ public class PlayerController : MonoBehaviour
         //Debug.Log("average contact direction" + this.collisionDirection);
 
         if(currentMode == ModeController.Mode.sticky){
-            //Debug.Log("gravity of");
+            Debug.Log("gravity of");
             GetComponent<Rigidbody>().useGravity = false;
             var newVelocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.velocity = newVelocity;
