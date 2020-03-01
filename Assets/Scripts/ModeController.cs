@@ -123,7 +123,7 @@ public class ModeController : MonoBehaviour
 
     void SetColor(Color color)
     {
-        RenderSettings.ambientLight = color * 0.1f;
+        RenderSettings.ambientLight = color * 0.3f;
         sunlight.color = color;
     }
 }
