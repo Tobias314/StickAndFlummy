@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
             collider.material.bounciness = 0;
             rb.useGravity = true;
         }
+        currentMode = newMode;
     }
 
     void Start()
@@ -61,6 +62,11 @@ public class PlayerController : MonoBehaviour
             isJumping=false;
             if(isColliding){
                 rb.AddForce(new Vector3(0,10,0), ForceMode.Impulse);
+            }
+        }
+        if(currentMode == ModeController.Mode.sticky){
+            if(isColliding){
+                rb.AddForce((-collisionDirection) * Time.fixedDeltaTime * 100, ForceMode.Impulse);
             }
         }
     }
