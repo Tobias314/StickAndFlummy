@@ -17,35 +17,57 @@ public class ModeController : MonoBehaviour
     public Color flummyColor;
     public Color ghostColor;
 
+
+    private float transitionTime = 0.05f;
+
     private Vector3 flummyJumpSpeed = new Vector3(1,0,0) * 5;
 
     private bool stickyIsHeld;
     private bool flummyIsHeld;
 
+    // for color transition
+    private Color prevColor;
+    private Color currentColor;
+    private float startOfTransition;
+
     public void Start(){
         //EnterFlummyMode();
         player.rb.AddForce(flummyJumpSpeed, ForceMode.Impulse);
         EnterNormalMode();
+
+        prevColor = normalColor;
+        currentColor = normalColor;
     }
     void Update(){
+        // delay is to make it easier to switch from sticky to flummy without accidentally passing by normal or ghost
         if(Input.GetKeyDown(KeyCode.S)){
             stickyIsHeld = true;
-            UpdateMode();
+            CancelInvoke();
+            Invoke("UpdateMode", transitionTime);
+            StartColorTransition();
         }
          if(Input.GetKeyDown(KeyCode.F)){
             flummyIsHeld = true;
-            UpdateMode();
+            CancelInvoke();
+            Invoke("UpdateMode", transitionTime);
+            StartColorTransition();
         }
         if (Input.GetKeyUp(KeyCode.S))
         {
             stickyIsHeld = false;
-            UpdateMode();
+            CancelInvoke();
+            Invoke("UpdateMode", transitionTime);
+            StartColorTransition();
         }
         if (Input.GetKeyUp(KeyCode.F))
         {
             flummyIsHeld = false;
-            UpdateMode();
+            CancelInvoke();
+            Invoke("UpdateMode", transitionTime);
+            StartColorTransition();
         }
+
+        LerpColor();
     }
 
     void UpdateMode(){
@@ -120,10 +142,41 @@ public class ModeController : MonoBehaviour
         player.rb.useGravity = true;
         player.gameObject.layer = 8;
     }
+    
 
     void SetColor(Color color)
     {
         RenderSettings.ambientLight = color * 0.3f;
         sunlight.color = color;
+    }
+
+    private void StartColorTransition()
+    {
+        startOfTransition = Time.time;
+        prevColor = sunlight.color;
+        //COPY PASTA
+        if (!stickyIsHeld && !flummyIsHeld)
+        {
+            currentColor = normalColor;
+        }
+        if (stickyIsHeld && !flummyIsHeld)
+        {
+            currentColor = stickyColor;
+        }
+        if (!stickyIsHeld && flummyIsHeld)
+        {
+            currentColor = flummyColor;
+        }
+        if (stickyIsHeld && flummyIsHeld)
+        {
+            currentColor = ghostColor;
+        }
+    }
+
+    private void LerpColor()
+    {
+        Color newColor = Color.Lerp(prevColor, currentColor, (Time.time - startOfTransition) / (transitionTime * 2));
+        RenderSettings.ambientLight = newColor * 0.3f;
+        sunlight.color = newColor;
     }
 }
