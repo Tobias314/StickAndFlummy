@@ -102,7 +102,7 @@ public class ModeController : MonoBehaviour
         SetColor(flummyColor);
         player.currentMode = Mode.flummy;
         player.GetComponent<SphereCollider>().material.bounciness = 1;
-        if(player.isColliding){
+        if(player.collisionCount > 0){
             //player.rb.AddForce((Mathf.Abs(player.collisionDirection.x) * player.collisionDirection) + ((1.0f - Mathf.Abs(player.collisionDirection.x)) * Vector3.up) * 10, ForceMode.Impulse);
             //player.rb.velocity = ;
             player.rb.AddForce( - player.collisionDirection * 10 + Vector3.up * 7, ForceMode.Impulse);        

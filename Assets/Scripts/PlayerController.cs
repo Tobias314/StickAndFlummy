@@ -5,7 +5,7 @@ public class PlayerController : MonoBehaviour
 {
     public Rigidbody rb;
     public bool isJumping;
-    public bool isColliding;
+    public int collisionCount = 0;
     public Vector3 collisionDirection;
     public bool useGravitationInBounce = true;
     public ModeController.Mode currentMode = ModeController.Mode.flummy;
@@ -66,8 +66,8 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision){
-        //Debug.Log("entered");
-        isColliding = true;
+        Debug.Log("entered");
+        collisionCount++;
         Vector3 collisionDirection = new Vector3(0,0,0);
         for(int i=0; i<collision.contactCount; i++){
             collisionDirection += collision.GetContact(i).point;
@@ -87,8 +87,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionExit(Collision other){
         //Debug.Log("exited");
-        isColliding = false;
-        GetComponent<Rigidbody>().useGravity = useGravitationInBounce;
+        collisionCount--;
+        if (currentMode == ModeController.Mode.sticky && collisionCount<=0)
+        {
+            GetComponent<Rigidbody>().useGravity = true;
+        }
     }
 
 }
