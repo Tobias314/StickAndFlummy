@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameProgress : MonoBehaviour
 {
+    public Text text;
+
     public void Lose(){
         //Time.timeScale = 0.1f;
         //Time.fixedDeltaTime /= 10; 
@@ -13,6 +16,8 @@ public class GameProgress : MonoBehaviour
 
     public void Win(){
         Debug.Log("I won!!!!!!!!!!!!!!!!");
+        Time.timeScale = 0;
+        text.text = "I won!!!!!!!!!!!!!!!!";
     }
 
     void RelodeScene(){
