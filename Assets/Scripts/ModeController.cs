@@ -18,7 +18,7 @@ public class ModeController : MonoBehaviour
     public Color ghostColor;
 
 
-    private float transitionTime = 0.05f;
+    private float transitionTime = 0.02f;
 
     private Vector3 flummyJumpSpeed = new Vector3(1,0,0) * 5;
 
@@ -29,7 +29,7 @@ public class ModeController : MonoBehaviour
     private Color prevColor;
     private Color currentColor;
     private float startOfTransition;
-
+    
     public void Start(){
         //EnterFlummyMode();
         player.rb.AddForce(flummyJumpSpeed, ForceMode.Impulse);
