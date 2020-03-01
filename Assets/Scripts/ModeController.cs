@@ -49,7 +49,7 @@ public class ModeController : MonoBehaviour
     }
 
     void UpdateMode(){
-        //LeaveCurrentMode();
+        LeaveCurrentMode();
         if (!stickyIsHeld && !flummyIsHeld)
         {
             EnterNormalMode();
@@ -67,38 +67,39 @@ public class ModeController : MonoBehaviour
             EnterGhostMode();
         }
     }
-    /*
+    
     void LeaveCurrentMode(){
+        player.gameObject.layer = 0;
         Mode prevMode = player.currentMode;
-        if (prevMode == Mode.normal)
-        {
-
-        }
-        if (prevMode == Mode.flummy)
-        {
-
+        if (prevMode == Mode.ghost)
+        {//are we intersecting with a collider?
+            Collider[] cols = Physics.OverlapSphere(player.transform.position, transform.localScale.x);
+            foreach (Collider col in cols)
+            {
+                if (!col.CompareTag("Player"))
+                {
+                    GetComponent<GameProgress>().Lose();
+                }
+            }
         }
     }
-    */
+    
     void EnterNormalMode()
     {
-        player.gameObject.layer = 0;
         player.GetComponent<SphereCollider>().material.bounciness = 0; //this belong is LeaveCurrentMode()
         player.currentMode = Mode.normal;
-        sunlight.color = normalColor;
+        SetColor(normalColor);
         player.rb.useGravity = true;
     }
 
     void EnterStickyMode(){
-        player.gameObject.layer = 0;
-        sunlight.color = stickyColor;
+        SetColor(stickyColor);
         player.currentMode = Mode.sticky;
         player.GetComponent<SphereCollider>().material.bounciness = 0;
     }
     void EnterFlummyMode(){
-        player.gameObject.layer = 0;
         player.rb.useGravity = false;
-        sunlight.color = flummyColor;
+        SetColor(flummyColor);
         player.currentMode = Mode.flummy;
         player.GetComponent<SphereCollider>().material.bounciness = 1;
         if(player.isColliding){
@@ -114,9 +115,15 @@ public class ModeController : MonoBehaviour
     {
         player.currentMode = Mode.ghost;
         player.GetComponent<SphereCollider>().material.bounciness = 0;
-        sunlight.color = ghostColor;
+        SetColor(ghostColor);
         Debug.Log("Entering GHOOOOOOOOST MOOOODE!");
         player.rb.useGravity = true;
         player.gameObject.layer = 8;
+    }
+
+    void SetColor(Color color)
+    {
+        RenderSettings.ambientLight = color * 0.1f;
+        sunlight.color = color;
     }
 }

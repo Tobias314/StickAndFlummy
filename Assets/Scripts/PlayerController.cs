@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
             gravityDirectionIndex += 1;
             gravityDirectionIndex = gravityDirectionIndex % GravityDirections.Length;
             Debug.Log(gravityDirectionIndex);
-            Physics.gravity = GravityDirections[gravityDirectionIndex];
+            //Physics.gravity = GravityDirections[gravityDirectionIndex];
             Debug.Log(GravityDirections[gravityDirectionIndex]);          
         }
         //Physics.Raycast(transform.position,)
@@ -49,7 +49,11 @@ public class PlayerController : MonoBehaviour
     {
         if (currentMode == ModeController.Mode.normal)
         {
-            rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
+            //rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
+            if (rb.velocity.x < 1)
+            {
+                rb.velocity += new Vector3(.1f, 0, 0);
+            }
         }
         //Debug.Log(isColliding);
         //rb.MovePosition(transform.position + transform.right * Time.fixedDeltaTime);
